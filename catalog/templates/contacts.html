@@ -113,20 +113,20 @@
             <div class="row">
                     <div class="col-5">
                       <div class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2 w-7 border border-3 border-dark-subtle" style="margin-top: 20px; margin-left: 200px; margin-bottom: 30px;">
-                      <form>
+                      <form method="post" action="">
                           {% csrf_token %}
                           <legend class="center">Свяжитесь с нами</legend>
                         <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Имя</label>
-                          <input type="text" class="form-control border border-2 border-dark-subtle" aria-label="Username" aria-describedby="addon-wrapping" style="width: 450px;">
+                          <label for="name" class="form-label">Имя</label>
+                          <input type="text" class="form-control border border-2 border-dark-subtle" aria-label="Username" id="name" name="name" aria-describedby="addon-wrapping" style="width: 450px;" required>
                         </div>
                         <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Почта</label>
-                          <input type="email" class="form-control border border-2 border-dark-subtle" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <label for="email" class="form-label">Почта</label>
+                          <input type="email" class="form-control border border-2 border-dark-subtle" id="email" name="email" aria-describedby="emailHelp" required>
                         </div>
                         <div class="mb-3">
-                          <label for="exampleFormControlTextarea1" class="form-label">Сообщение</label>
-                          <textarea class="form-control border border-2 border-dark-subtle" id="exampleFormControlTextarea1" rows="3"></textarea>
+                          <label for="message" class="form-label">Сообщение</label>
+                          <textarea class="form-control border border-2 border-dark-subtle" id="message" name="message" rows="3"></textarea>
                         </div>
                         <button type="submit" class="btn btn bordp podsvetkap textp btn-lg">Отправить</button>
                       </form>
