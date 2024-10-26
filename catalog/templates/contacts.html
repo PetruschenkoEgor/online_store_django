@@ -74,10 +74,18 @@
         .fix {
             position: fixed;
         }
+        .container {
+          display: grid;
+          grid-template-columns: repeat(2, 3fr);
+          justify-content: center;
+        }
+        .center-el {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
-    <div class="row">
         <div class="col-12">
             <div class="stripe-top">
                 <p class="center text-white fs-2">OnlineStore - всегда Онлайн</p>
@@ -86,10 +94,9 @@
         <div class="col-12 center">
             <p><a href="#" class="d-inline-flex focus-ring focus-ring-dark py-1 px-2 text-decoration-none border rounded-2 textp podsvetkav">OnlineStore информация</a></p>
         </div>
-        <div class="col-6">
-            <div class="row">
+            <div class="container">
                 <div class="col-12">
-                <table class="table caption-top" style="margin-left: 80px; margin-top: 60px;">
+                <table class="table caption-top" style="margin-left: 0px; margin-top: 60px;">
                   <caption><h1>Контакты</h1></caption>
                   <tbody>
                     <tr>
@@ -107,43 +114,37 @@
                   </tbody>
                 </table>
             </div>
-        </div>
-            </div>
-        <div class="col-6">
-            <div class="row">
                     <div class="col-5">
                       <div class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2 w-7 border border-3 border-dark-subtle" style="margin-top: 20px; margin-left: 200px; margin-bottom: 30px;">
                       <form method="post" action="">
                           {% csrf_token %}
                           <legend class="center">Свяжитесь с нами</legend>
                         <div class="mb-3">
-                          <label for="name" class="form-label">Имя</label>
+                          <label for="name" class="form-label textp">Имя</label>
                           <input type="text" class="form-control border border-2 border-dark-subtle" aria-label="Username" id="name" name="name" aria-describedby="addon-wrapping" style="width: 450px;" required>
                         </div>
                         <div class="mb-3">
-                          <label for="email" class="form-label">Почта</label>
+                          <label for="email" class="form-label textp">Почта</label>
                           <input type="email" class="form-control border border-2 border-dark-subtle" id="email" name="email" aria-describedby="emailHelp" required>
                         </div>
                         <div class="mb-3">
-                          <label for="message" class="form-label">Сообщение</label>
+                          <label for="message" class="form-label textp">Сообщение</label>
                           <textarea class="form-control border border-2 border-dark-subtle" id="message" name="message" rows="3"></textarea>
                         </div>
                         <button type="submit" class="btn btn bordp podsvetkap textp btn-lg">Отправить</button>
                       </form>
                         </div>
                     </div>
-            </div>
-        </div>
+                </div>
         <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/66/omsk/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Омск</a><a href="https://yandex.ru/maps/66/omsk/?ll=73.381188%2C54.972005&mode=whatshere&utm_medium=mapframe&utm_source=maps&whatshere%5Bpoint%5D=73.379471%2C54.971571&whatshere%5Bzoom%5D=13&z=13" style="color:#eee;font-size:12px;position:absolute;top:14px;">Улица Ленина — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll=73.381188%2C54.972005&mode=whatshere&whatshere%5Bpoint%5D=73.379471%2C54.971571&whatshere%5Bzoom%5D=13&z=13" width="100%" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
-        <div class="col-6 span fix">
+        <div class="col-12 span fix">
             <div class="zindex">
-            <div class="button-group container mar-lef">
+            <div class="button-group container center-el">
                 <a href="http://localhost:63342/online_store_django/catalog/templates/home.html?_ijt=9nkr21uoobs9hkd49lde9v33mv&_ij_reload=RELOAD_ON_SAVE#"><button class="button bgcg fs-1 radius-left podsvetka">Главная</button></a>
                 <button class="button bgcg podsvetka fs-1">Каталог</button>
                 <a href="http://localhost:63342/online_store_django/catalog/templates/contacts.html?_ijt=4ad31070gog98skkdgp9kbki6r&_ij_reload=RELOAD_ON_SAVE"><button class="button bgcp podsvetkav fs-1 radius-right">Контакты</button></a>
             </div>
             </div>
         </div>
-    </div>
 </body>
 </html>
