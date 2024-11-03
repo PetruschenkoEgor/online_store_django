@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Контакты</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .center {
+            text-align: center;
+        }
+        .stripe-top {
+            width: 100%;
+            height: 60px;
+            background-color: black;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+        }
+        .span{
+        position: absolute;
+        bottom: 0;
+        }
+        .podsvetka:hover {
+        background: DimGray; /* тут цвет*/
+        }
+        .podsvetkap:hover {
+        background: MediumPurple; /* тут цвет*/
+        color: white;
+        }
+        .podsvetkav:hover {
+        background: BlueViolet; /* тут цвет*/
+        color: white;
+        }
+        .mar-lef {
+            margin-left: 470px
+        }
+        .button-group .button {
+            padding: 10px 20px;
+            border: 0px solid black;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            float: left;
+        }
+        .radius-left {
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+        }
+        .radius-right {
+            border-top-right-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+        .bgcg {
+            background-color: DarkGrey;
+            opacity: .8;
+        }
+        .bgcp {
+            background-color: MediumPurple;
+            opacity: .8;
+        }
+        .bordp {
+            border-color: MediumPurple;
+            border-width: 2px;
+        }
+        .textp {
+            color: MediumPurple;
+        }
+        .zindex {
+            z-index: 10;
+            position: absolut;
+        }
+        .fix {
+            position: fixed;
+        }
+        .container {
+          display: grid;
+          grid-template-columns: repeat(2, 3fr);
+          justify-content: center;
+        }
+        .center-el {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+        <div class="col-12">
+            <div class="stripe-top">
+                <p class="center text-white fs-2">OnlineStore - всегда Онлайн</p>
+            </div>
+        </div>
+        <div class="col-12 center">
+            <p><a href="#" class="d-inline-flex focus-ring focus-ring-dark py-1 px-2 text-decoration-none border rounded-2 textp podsvetkav">OnlineStore информация</a></p>
+        </div>
+            <div class="container">
+                <div class="col-12">
+                <table class="table caption-top" style="margin-left: 0px; margin-top: 60px;">
+                  <caption><h1>Контакты</h1></caption>
+                  <tbody>
+                    <tr>
+                      <td><h3>Телефон</h3></td>
+                      <td><h3 class="textp">8 951 405 ****</h3></td>
+                    </tr>
+                    <tr>
+                      <td><h3>Адрес</h3></td>
+                      <td><h3 class="textp">Омск</h3></td>
+                    </tr>
+                    <tr>
+                      <td><h3>Веб-сайт</h3></td>
+                      <td><h3 class="textp">http://online_store_django.ru</h3></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+                    <div class="col-5">
+                      <div class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2 w-7 border border-3 border-dark-subtle" style="margin-top: 20px; margin-left: 200px; margin-bottom: 30px;">
+                      <form method="post" action="">
+                          {% csrf_token %}
+                          <legend class="center">Свяжитесь с нами</legend>
+                        <div class="mb-3">
+                          <label for="name" class="form-label textp">Имя</label>
+                          <input type="text" class="form-control border border-2 border-dark-subtle" aria-label="Username" id="name" name="name" aria-describedby="addon-wrapping" style="width: 450px;" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="email" class="form-label textp">Почта</label>
+                          <input type="email" class="form-control border border-2 border-dark-subtle" id="email" name="email" aria-describedby="emailHelp" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="message" class="form-label textp">Сообщение</label>
+                          <textarea class="form-control border border-2 border-dark-subtle" id="message" name="message" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn bordp podsvetkap textp btn-lg">Отправить</button>
+                      </form>
+                        </div>
+                    </div>
+                </div>
+        <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/66/omsk/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Омск</a><a href="https://yandex.ru/maps/66/omsk/?ll=73.381188%2C54.972005&mode=whatshere&utm_medium=mapframe&utm_source=maps&whatshere%5Bpoint%5D=73.379471%2C54.971571&whatshere%5Bzoom%5D=13&z=13" style="color:#eee;font-size:12px;position:absolute;top:14px;">Улица Ленина — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll=73.381188%2C54.972005&mode=whatshere&whatshere%5Bpoint%5D=73.379471%2C54.971571&whatshere%5Bzoom%5D=13&z=13" width="100%" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+        <div class="col-12 span fix">
+            <div class="zindex">
+            <div class="button-group container center-el">
+                <a href="http://localhost:63342/online_store_django/catalog/templates/home.html?_ijt=9nkr21uoobs9hkd49lde9v33mv&_ij_reload=RELOAD_ON_SAVE#"><button class="button bgcg fs-1 radius-left podsvetka">Главная</button></a>
+                <button class="button bgcg podsvetka fs-1">Каталог</button>
+                <a href="http://localhost:63342/online_store_django/catalog/templates/contacts.html?_ijt=4ad31070gog98skkdgp9kbki6r&_ij_reload=RELOAD_ON_SAVE"><button class="button bgcp podsvetkav fs-1 radius-right">Контакты</button></a>
+            </div>
+            </div>
+        </div>
+</body>
+</html>
