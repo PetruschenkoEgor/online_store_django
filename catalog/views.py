@@ -18,8 +18,8 @@ def contacts(request):
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено!")
     contact = Contact.objects.get(id=2)
     context = {
-        'telephone': contact.telephone,
-        'address': contact.address,
-        'website': contact.web_site,
+        "telephone": contact.telephone,
+        "address": contact.address,
+        "website": contact.web_site,
     }
     return render(request, "contacts.html", context)
