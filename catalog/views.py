@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from catalog.models import Contact
 
 
-# Create your views here.
 def home(request):
     return render(request, "home.html")
 
@@ -16,4 +16,10 @@ def contacts(request):
         # Обработка данных (например, сохранение в БД, отправка email и т. д.)
         print(f"{name}({email}): {message}")
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено!")
-    return render(request, "contacts.html")
+    contact = Contact.objects.get(id=2)
+    context = {
+        'telephone': contact.telephone,
+        'address': contact.address,
+        'website': contact.web_site,
+    }
+    return render(request, "contacts.html", context)
