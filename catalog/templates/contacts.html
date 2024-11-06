@@ -65,7 +65,7 @@
             border-width: 2px;
         }
         .textp {
-            color: MediumPurple;
+            color: BlueViolet;
         }
         .zindex {
             z-index: 10;
@@ -101,15 +101,15 @@
                   <tbody>
                     <tr>
                       <td><h3>Телефон</h3></td>
-                      <td><h3 class="textp">8 951 405 ****</h3></td>
+                      <td><h3 class="textp">{{ telephone }}</h3></td>
                     </tr>
                     <tr>
                       <td><h3>Адрес</h3></td>
-                      <td><h3 class="textp">Омск</h3></td>
+                      <td><h3 class="textp">{{ address }}</h3></td>
                     </tr>
                     <tr>
                       <td><h3>Веб-сайт</h3></td>
-                      <td><h3 class="textp">http://online_store_django.ru</h3></td>
+                      <td><h3 class="textp">{{ website }}</h3></td>
                     </tr>
                   </tbody>
                 </table>
@@ -140,9 +140,9 @@
         <div class="col-12 span fix">
             <div class="zindex">
             <div class="button-group container center-el">
-                <a href="http://localhost:63342/online_store_django/catalog/templates/home.html?_ijt=9nkr21uoobs9hkd49lde9v33mv&_ij_reload=RELOAD_ON_SAVE#"><button class="button bgcg fs-1 radius-left podsvetka">Главная</button></a>
+                <a href="http://127.0.0.1:8000/home/"><button class="button bgcg fs-1 radius-left podsvetka">Главная</button></a>
                 <button class="button bgcg podsvetka fs-1">Каталог</button>
-                <a href="http://localhost:63342/online_store_django/catalog/templates/contacts.html?_ijt=4ad31070gog98skkdgp9kbki6r&_ij_reload=RELOAD_ON_SAVE"><button class="button bgcp podsvetkav fs-1 radius-right">Контакты</button></a>
+                <a href="http://127.0.0.1:8000/contacts/"><button class="button bgcp podsvetkav fs-1 radius-right">Контакты</button></a>
             </div>
             </div>
         </div>
