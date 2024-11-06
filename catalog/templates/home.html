@@ -65,7 +65,7 @@
             border-width: 2px;
         }
         .textp {
-            color: MediumPurple;
+            color: BlueViolet;
         }
         .zindex {
             z-index: 10;
@@ -96,51 +96,29 @@
         </div>
        <div class="col">
       <h1 class="center" style="margin-top: 20px;">Подобрали специально для Вас</h1>
-       </div>
-        <div class="container" style="margin-top: 75px;">
+      <div class="container" style="margin-top: 75px;">
+        {% for product in products %}
         <div class="col">
-          <div class="card h-100" style="margin: 30px; margin-top: 0px; width: 450px;">
-            <div class="card-header center" style="background: Gainsboro;">
-          <h5>Телеграм боты</h5>
+            <div class="card h-100" style="margin: 30px; margin-top: 0px; width: 450px;">
+                <div class="card-header center" style="background: Gainsboro;">
+                    <h5>{{ product.name }}</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title center textp">₽{{ product.price|floatformat:2 }}</h1>
+                    <p class="card-text center mt-5">{{ product.description }}</p>
+                </div>
+                <button type="button" class="btn btn-outline bordp podsvetkap" style="margin: 10px;">Купить</button>
+            </div>
         </div>
-            <div class="card-body">
-              <h1 class="card-title center">$ 100</h1>
-              <p class="card-text center mt-5">10 users included, 2 GB of storage, Email support, Help center access</p>
-            </div>
-            <button type="button" class="btn btn-outline bordp podsvetkap" style="margin: 10px;">Купить</button>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100" style="margin: 30px; margin-top: 0px; width: 450px;">
-            <div class="card-header center" style="background: Gainsboro;">
-              <h5>Веб-приложения</h5>
-            </div>
-            <div class="card-body">
-              <h1 class="card-title center">$ 100</h1>
-              <p class="card-text center mt-5">10 users included, 2 GB of storage, Email support, Help center access</p>
-            </div>
-            <button type="button" class="btn btn-outline bordp podsvetkap" style="margin: 10px;">Купить</button>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100" style="margin: 30px; margin-top: 0px; width: 450px;">
-            <div class="card-header center" style="background: Gainsboro;">
-              <h5>Рассылки</h5>
-            </div>
-            <div class="card-body">
-              <h1 class="card-title center">$ 100</h1>
-              <p class="card-text center mt-5">10 users included, 2 GB of storage, Email support, Help center access</p>
-            </div>
-            <button type="button" class="btn btn-outline bordp podsvetkap" style="margin: 10px;">Купить</button>
-          </div>
-        </div>
+        {% endfor %}
+    </div>
             </div>
         <div class="col-12 span fix">
             <div class="zindex">
             <div class="button-group container center-el">
-                <button class="button bgcp fs-1 radius-left podsvetkav">Главная</button>
+                <a href="http://127.0.0.1:8000/home/"><button class="button bgcp fs-1 radius-left podsvetkav">Главная</button></a>
                 <button class="button bgcg podsvetka fs-1">Каталог</button>
-                <a href="http://localhost:63342/online_store_django/catalog/templates/contacts.html?_ijt=4ad31070gog98skkdgp9kbki6r&_ij_reload=RELOAD_ON_SAVE"><button class="button bgcg podsvetka fs-1 radius-right">Контакты</button></a>
+                <a href="http://127.0.0.1:8000/contacts/"><button class="button bgcg podsvetka fs-1 radius-right">Контакты</button></a>
             </div>
             </div>
         </div>

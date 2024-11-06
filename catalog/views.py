@@ -1,10 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from catalog.models import Contact
+from catalog.models import Contact, Product
 
 
 def home(request):
-    return render(request, "home.html")
+    products = Product.objects.all()[2:6]
+    context = {"products": products}
+    for product in context.get("products"):
+        print(f"Наименование товара - {product.name}")
+        print(f"Цена товара - {product.price}")
+        print(f"Описание товара - {product.description}")
+        print()
+    return render(request, "home.html", context)
 
 
 def contacts(request):
