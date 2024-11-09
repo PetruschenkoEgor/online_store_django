@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     <h1 class="card-title center textp">₽{{ product.price|floatformat:2 }}</h1>
-                    <p class="card-text center mt-5">{{ product.description }}</p>
+                    <p class="card-text center mt-5">{{ product.description|truncatechars:100 }}</p>
                 </div>
                 <button type="button" class="btn btn-outline bordp podsvetkap" style="margin: 10px;">Купить</button>
             </div>
