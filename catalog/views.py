@@ -4,7 +4,7 @@ from catalog.models import Contact, Product
 
 
 def home(request):
-    products = Product.objects.all()[2:6]
+    products = Product.objects.all()[2:5]
     context = {"products": products}
     for product in context.get("products"):
         print(f"Наименование товара - {product.name}")
@@ -30,3 +30,9 @@ def contacts(request):
         "website": contact.web_site,
     }
     return render(request, "contacts.html", context)
+
+
+def product_page(request, pk):
+    prod = Product.objects.get(pk=pk)
+    context = {'product': prod}
+    return render(request, 'product.html', context)
