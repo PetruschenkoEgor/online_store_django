@@ -34,5 +34,5 @@ def contacts(request):
 
 def product_page(request, pk):
     prod = Product.objects.get(pk=pk)
-    context = {'product': prod}
-    return render(request, 'product.html', context)
+    context = {"product": prod}
+    return render(request, "product.html", context)
