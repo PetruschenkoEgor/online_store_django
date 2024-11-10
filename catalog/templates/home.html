@@ -10,7 +10,7 @@
         <div class="col">
             <div class="card h-100" style="margin: 30px; margin-top: 0px; width: 400px;">
                 <div class="card-header center" style="background: Gainsboro;">
-                    <img src="{{ product.image|media_filter }}" class="card-img-top img" alt="...">
+                    <a href="{% url 'catalog:product' product.pk %}"><img src="{{ product.image|media_filter }}" class="card-img-top img img-podsvetka" alt="..."></a>
                     <h5>{{ product.name }}</h5>
                 </div>
                 <div class="card-body">
