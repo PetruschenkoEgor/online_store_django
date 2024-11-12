@@ -87,8 +87,11 @@
             color: BlueViolet;
         }
         .zindex {
-            z-index: 1000;
+            z-index: 1060;
             position: relative;
+        }
+        .zindex-min {
+            z-index: 100;
         }
         .fix {
             position: fixed;
@@ -124,8 +127,8 @@
         <div class="col-12 center">
             <p><a href="#" class="d-inline-flex focus-ring focus-ring-dark py-1 px-2 text-decoration-none border rounded-2 textp podsvetkav">OnlineStore информация</a></p>
         </div>
-        {% include 'includes/inc_menu.html' %}
        {% block content %}
         {% endblock %}
+        {% include 'includes/inc_menu.html' %}
 </body>
 </html>

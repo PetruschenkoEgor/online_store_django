@@ -14,7 +14,7 @@ def home(request):
     #     print()
     products_list = []
     for count in range(1, 4):
-        product = get_object_or_404(Product, id=count)
+        product = Product.objects.get(id=count)
         products_list.append(product)
         print(f"Наименование товара - {product.name}")
         print(f"Цена товара - {product.price}")
