@@ -3,7 +3,7 @@
 {% block content %}
 <div class="col-12">
     <div class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2 w-7 border border-3 border-dark-subtle" style="margin-top: 20px; margin-left: 33%; width: 35%;">
-        <form method="post" action="" style="width: 100%">
+        <form method="post" enctype="multipart/form-data" action="" style="width: 100%">
             {% csrf_token %}
             <legend class="center mt-1">Заполните карточку товара</legend>
             <div class="input-group mt-1">

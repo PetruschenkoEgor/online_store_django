@@ -1,17 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+
+from catalog.forms import ProductForm
 from catalog.models import Contact, Product, Category
 
 
 def home(request):
     """Главная страница"""
-    # products = Product.objects.all()[2:5]
-    # context = {"products": products}
-    # for product in context.get("products"):
-    #     print(f"Наименование товара - {product.name}")
-    #     print(f"Цена товара - {product.price}")
-    #     print(f"Описание товара - {product.description}")
-    #     print()
     products_list = []
     for count in range(1, 4):
         product = Product.objects.get(id=count)
@@ -54,22 +49,11 @@ def product_page(request, pk):
 def add_product(request):
     """Страница добавления продукта"""
     if request.method == "POST":
-        # Получение данных из формы
-        name = request.POST.get("name")
-        description = request.POST.get("description")
-        image = request.POST.get("image")
-        category_id = request.POST.get("category")
-        price = request.POST.get("price")
-        # Получаем категорию
-        category = get_object_or_404(Category, pk=category_id)
-        # Создаем продукт и сохраняем его в БД
-        product = Product(
-            name=name,
-            description=description,
-            image=image,
-            category=category,
-            price=price,
-        )
-        product.save()
-        return HttpResponse("Продукт успешно добавлен!")
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            image = form.instance
+            return HttpResponse("Продукт успешно добавлен!")
+    else:
+        form = ProductForm()
     return render(request, "add_product.html")
