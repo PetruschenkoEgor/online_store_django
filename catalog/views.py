@@ -76,7 +76,7 @@ def catalog(request):
     """ Страница каталога продуктов """
     # Получаем все продукты
     products = Product.objects.all()
-    # Создаем объект пагинатор(3 продукта на страницу)
+    # Создаем пагинатор(3 продукта на страницу)
     paginator = Paginator(products, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
