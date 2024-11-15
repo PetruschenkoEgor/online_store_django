@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.core.paginator import Paginator
 
 from catalog.forms import ProductForm
 from catalog.models import Contact, Product, Category
@@ -17,6 +18,18 @@ def home(request):
         print()
     context = {"products": products_list}
     return render(request, "home.html", context)
+    # # Получаем все продукты
+    # products_list = Product.objects.all()
+    # # Создаем объект пагинатор(3 продукта на страницу)
+    # paginator = Paginator(products_list, 3)
+    # # page_number = request.GET.get('page')
+    # # page_obj = paginator.get_page(page_number)
+    #
+    # # context = {
+    # #     'page_obj': page_obj
+    # # }
+
+    # return render(request, "home1.html", {'home': paginator.page(page_number)})
 
 
 def contacts(request):
@@ -57,3 +70,15 @@ def add_product(request):
     else:
         form = ProductForm()
     return render(request, "add_product.html")
+
+
+def catalog(request):
+    """ Страница каталога продуктов """
+    # Получаем все продукты
+    products = Product.objects.all()
+    # Создаем объект пагинатор(3 продукта на страницу)
+    paginator = Paginator(products, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'page_obj': page_obj}
+    return render(request, 'catalog.html', context)
