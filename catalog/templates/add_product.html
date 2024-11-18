@@ -2,10 +2,13 @@
 {% block title %}Добавление продукта{% endblock %}
 {% block content %}
 <div class="col-12">
-    <div class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2 w-7 border border-3 border-dark-subtle" style="margin-top: 20px; margin-left: 33%; width: 35%;">
+    <div class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2 w-7 border border-3 border-dark-subtle" style="margin-top: 20px; margin-left: 33%; width: 35%; margin-bottom: 7%;">
         <form method="post" enctype="multipart/form-data" action="" style="width: 100%">
             {% csrf_token %}
             <legend class="center mt-1">Заполните карточку товара</legend>
+            {% if object %}
+                {{ form.as_p }}
+            {% else %}
             <div class="input-group mt-1">
               <span class="input-group-text textp" style="width: 26%">Наименование</span>
               <input type="text" aria-label="Product name" id="name" name="name" class="form-control border-2">
@@ -31,7 +34,12 @@
               <span class="input-group-text textp" style="width: 6%">₽</span>
               <input type="text" class="form-control border-2" aria-label="Price" id="price" name="price">
             </div>
-            <button type="submit" class="btn btn bordp podsvetkap textp btn-lg">Создать</button>
+            {% endif %}
+            {% if object %}
+                <button type="submit" class="btn btn bordp podsvetkap textp btn-lg">Сохранить</button>
+            {% else %}
+                <button type="submit" class="btn btn bordp podsvetkap textp btn-lg">Создать</button>
+            {% endif %}
         </form>
     </div>
 </div>
