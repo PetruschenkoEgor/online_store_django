@@ -14,7 +14,7 @@
   <div class="card-body">
       {% csrf_token %}
     <h3 class="card-title">{{ article.title|upper }}</h3>
-    <p class="card-text">{{ article.content }}</p>
+    <p class="card-text">{{ article.content|truncatechars:250 }}</p>
   </div>
 </div>
   </div>

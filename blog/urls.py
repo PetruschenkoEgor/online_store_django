@@ -12,8 +12,8 @@ app_name = BlogConfig.name
 
 urlpatterns = [
     path("blog/", ArticleListView.as_view(), name="blog"),
-    path("article/<int:pk>/", ArticleDetailView.as_view(), name="article"),
-    path("article/new/", ArticleCreateView.as_view(), name="create"),
-    path("article/<int:pk>/edit/", ArticleUpdateView.as_view(), name="update"),
-    path("article/<int:pk>/delete/", ArticleDeleteView.as_view(), name="delete"),
+    path("blog/<int:pk>/", ArticleDetailView.as_view(), name="article"),
+    path("blog/new/", ArticleCreateView.as_view(), name="create"),
+    path("blog/<int:pk>/edit/", ArticleUpdateView.as_view(), name="update"),
+    path("blog/<int:pk>/delete/", ArticleDeleteView.as_view(), name="delete"),
 ]
