@@ -25,3 +25,11 @@ class Article(models.Model):
         help_text='Введите количество просмотров',
         default=0,
     )
+
+    class Meta:
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
+        ordering = ['title', 'created_at']
+
+    def __str__(self):
+        return f'{self.title} - {self.created_at}'
