@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Добавление статьи{% endblock %}
+{% block content %}
+<div class="col-12">
+    <div class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2 w-7 border border-3 border-dark-subtle" style="margin-top: 20px; margin-left: 25%; width: 50%; margin-bottom: 7%;">
+        <form method="post" enctype="multipart/form-data" action="" style="width: 100%">
+            {% csrf_token %}
+            <legend class="center mt-1">Заполните данные</legend>
+            {% if object %}
+                {{ form.as_p }}
+            {% else %}
+            <div class="input-group mt-1">
+              <span class="input-group-text textp" style="width: 26%">Заголовок статьи</span>
+              <input type="text" aria-label="Product name" id="title" name="title" class="form-control border-2">
+            </div>
+            <div class="input-group mb-2 mt-2">
+                <label class="input-group-text textp" for="inputGroupFile02" style="width: 26%">Изображение</label>
+              <input type="file" class="form-control border-2" id="inputGroupFile02" name="image">
+            </div>
+            <div class="input-group mt-2">
+              <span class="input-group-text textp" style="width: 26%">Текст статьи</span>
+              <input type="text" aria-label="Description" id="content" name="content" class="form-control border-2">
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="sign_of_publication" checked>
+              <label class="form-check-label" for="sign_of_publication">
+                Признак публикации
+              </label>
+            </div>
+            {% endif %}
+            {% if object %}
+                <button type="submit" class="btn btn bordp podsvetkap textp btn-lg mt-2">Сохранить</button>
+            {% else %}
+                <button type="submit" class="btn btn bordp podsvetkap textp btn-lg mt-2">Создать</button>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block title %}Подтверждение удаления{% endblock %}
+
+{% block content %}
+<div class="pos">
+<div class="col">
+    <form method="post" enctype="multipart/form-data">
+    <h1 class="center mb-4">Вы действительно хотите удалить эту статью?</h1>
+      <div class="container" style="margin-bottom: 2%;">
+<div class="card mb-3" style="width: 100%; margin-left: 100%;">
+  <p class="card-text" style="margin-left: 2%;"><small class="text-body-secondary">id:{{ article.id }} · колво прочтений · {{ article.created_at }}</small></p>
+  <img src="{{ article.image|media_filter }}" class="card-img-top mt-2 mb-3" style="width: 60%; margin-left: 20%;" alt="...">
+  <div class="card-body">
+      {% csrf_token %}
+    <h3 class="card-title">{{ article.title|upper }}</h3>
+    <p class="card-text">{{ article.content }}</p>
+  </div>
+</div>
+  </div>
+    <div class="d-grid gap-2 d-md-block" style="margin-left: 36%; margin-top: 0%;">
+        <a href="{{ request.META.HTTP_REFERER }}"><button type="button" class="btn btn-outline btn-lg bordp podsvetkap" style="margin: 10px; width: 20%; margin-bottom: 12%;">Отменить</button></a>
+        <button type="submit" class="btn btn-outline btn-lg bordred podsvetkared" style="margin: 10px; width: 20%; margin-bottom: 12%;">Удалить</button>
+    </div>
+    </form>
+</div>
+</div>
+{% endblock %}
