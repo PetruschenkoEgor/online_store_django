@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -18,6 +17,13 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'article.html'
     context_object_name = 'article'
+
+    def get_object(self, queryset=None):
+        """ Увеличение количества просмотров """
+        self.object = super().get_object()
+        self.object.views_counter += 1
+        self.object.save()
+        return self.object
 
 
 class ArticleCreateView(CreateView):

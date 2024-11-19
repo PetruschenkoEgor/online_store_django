@@ -9,7 +9,7 @@
     <h1 class="center mb-4">Вы действительно хотите удалить эту статью?</h1>
       <div class="container" style="margin-bottom: 2%;">
 <div class="card mb-3" style="width: 100%; margin-left: 100%;">
-  <p class="card-text" style="margin-left: 2%;"><small class="text-body-secondary">id:{{ article.id }} · колво прочтений · {{ article.created_at }}</small></p>
+  <p class="card-text" style="margin-left: 2%;"><small class="text-body-secondary">id:{{ article.id }} · {{ article.views_counter }} прочтений · {{ article.created_at }}</small></p>
   <img src="{{ article.image|media_filter }}" class="card-img-top mt-2 mb-3" style="width: 60%; margin-left: 20%;" alt="...">
   <div class="card-body">
       {% csrf_token %}
