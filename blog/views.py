@@ -11,6 +11,12 @@ class ArticleListView(ListView):
     template_name = 'blog.html'
     context_object_name = 'articles'
 
+    def get_queryset(self):
+        """ Выводит только статьи с положительным признаком публикации """
+        queryset = super().get_queryset()
+        queryset = queryset.filter(sign_of_publication=True)
+        return queryset
+
 
 class ArticleDetailView(DetailView):
     """ Детали статьи """
