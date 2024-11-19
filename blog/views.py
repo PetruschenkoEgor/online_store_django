@@ -35,14 +35,16 @@ class ArticleDetailView(DetailView):
     context_object_name = "article"
 
     def get_object(self, queryset=None):
-        """Увеличение количества просмотров"""
+        """Увеличение количества просмотров и отправка сообщения на почту яндекс каждые 100 просмотров"""
         self.object = super().get_object()
         self.object.views_counter += 1
         self.object.save()
+        # Как только статья набирает каждые 100 просмотров, отправляется сообщение на почту яндекс
         if (self.object.views_counter % 100) == 0:
             send_mail(
                 "Blog",
-                f"Поздравляю, количество просмотров твоей статьи(id: {self.object.id}, название: {self.object.title}) увеличилось на 100! Теперь {self.object.views_counter} просмотров!",
+                f"Поздравляю, количество просмотров твоей статьи(id: {self.object.id}, название: "
+                f"{self.object.title}) увеличилось на 100! Теперь {self.object.views_counter} просмотров!",
                 settings.EMAIL_HOST_USER,
                 ["petrushenko.jegor@ya.ru"],
             )
