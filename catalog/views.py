@@ -1,75 +1,77 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from catalog.models import Contact, Product, Category
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+from catalog.models import Contact, Product
 
 
-def home(request):
+class ProductTemplateView(TemplateView):
     """Главная страница"""
-    # products = Product.objects.all()[2:5]
-    # context = {"products": products}
-    # for product in context.get("products"):
-    #     print(f"Наименование товара - {product.name}")
-    #     print(f"Цена товара - {product.price}")
-    #     print(f"Описание товара - {product.description}")
-    #     print()
-    products_list = []
-    for count in range(1, 4):
-        product = Product.objects.get(id=count)
-        products_list.append(product)
-        print(f"Наименование товара - {product.name}")
-        print(f"Цена товара - {product.price}")
-        print(f"Описание товара - {product.description}")
-        print()
-    context = {"products": products_list}
-    return render(request, "home.html", context)
+
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        """ Передача объекта Product в шаблон """
+
+        context = super().get_context_data()
+        context["products"] = Product.objects.filter(id__lt=4)
+        return context
 
 
-def contacts(request):
-    """Страница с контактами"""
-    if request.method == "POST":
-        # Получение данных из формы
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
-        # Обработка данных (например, сохранение в БД, отправка email и т. д.)
-        print(f"{name}({email}): {message}")
-        return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено!")
-    contact = Contact.objects.get(id=2)
-    context = {
-        "telephone": contact.telephone,
-        "address": contact.address,
-        "website": contact.web_site,
-    }
-    return render(request, "contacts.html", context)
+class ProductListView(ListView):
+    """Список продуктов с пагинацией"""
+
+    model = Product
+    paginate_by = 3
+    template_name = "catalog.html"
+    context_object_name = "products"
 
 
-def product_page(request, pk):
-    """Страница с информацией о продукте"""
-    # Либо найдется страница, либо выскочит ошибка 404
-    prod = get_object_or_404(Product, pk=pk)
-    context = {"product": prod}
-    return render(request, "product.html", context)
+class ProductDetailView(DetailView):
+    """Информация о продукте"""
+
+    model = Product
+    template_name = "product.html"
+    context_object_name = "product"
 
 
-def add_product(request):
-    """Страница добавления продукта"""
-    if request.method == "POST":
-        # Получение данных из формы
-        name = request.POST.get("name")
-        description = request.POST.get("description")
-        image = request.POST.get("image")
-        category_id = request.POST.get("category")
-        price = request.POST.get("price")
-        # Получаем категорию
-        category = get_object_or_404(Category, pk=category_id)
-        # Создаем продукт и сохраняем его в БД
-        product = Product(
-            name=name,
-            description=description,
-            image=image,
-            category=category,
-            price=price,
-        )
-        product.save()
-        return HttpResponse("Продукт успешно добавлен!")
-    return render(request, "add_product.html")
+class ContactTemplateView(TemplateView):
+    """Контакты"""
+
+    template_name = "contacts.html"
+
+    def get_context_data(self, **kwargs):
+        """ Передача объекта Contact в шаблон """
+
+        context = super().get_context_data()
+        context["contact"] = Contact.objects.get(id=2)
+        return context
+
+
+class ProductCreateView(CreateView):
+    """Добавление продукта"""
+
+    model = Product
+    fields = ("name", "description", "image", "category", "price")
+    template_name = "add_product.html"
+    success_url = reverse_lazy("catalog:catalog")
+
+
+class ProductUpdateView(UpdateView):
+    """Редактирование продукта"""
+
+    model = Product
+    fields = ("name", "description", "image", "category", "price")
+    template_name = "add_product.html"
+    success_url = reverse_lazy("catalog:catalog")
+
+    def get_success_url(self):
+        return reverse("catalog:product", args=[self.kwargs.get("pk")])
+
+
+class ProductDeleteView(DeleteView):
+    """Удаление продукта"""
+
+    model = Product
+    template_name = "product_confirm_delete.html"
+    success_url = reverse_lazy("catalog:catalog")

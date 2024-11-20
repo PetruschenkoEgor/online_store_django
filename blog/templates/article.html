@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block title %}Статья{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-bottom: 5%;">
+    <a href="{{ request.META.HTTP_REFERER }}"><button type="button" class="btn btn-outline bordp podsvetkap" style="margin-left: -10%; width: 25%;">Назад</button></a>
+<div class="card mb-3" style="width: 200%; margin-left: -50%;">
+  <p class="card-text" style="margin-left: 2%;"><small class="text-body-secondary">id:{{ article.id }} · {{ article.views_counter }} прочтений · {{ article.created_at }}</small></p>
+  <img src="{{ article.image|media_filter }}" class="card-img-top mt-2 mb-3" style="width: 80%; margin-left: 10%;" alt="...">
+  <div class="card-body">
+    <h1 class="card-title">{{ article.title|upper }}</h1>
+    <p class="card-text">{{ article.content }}</p>
+  </div>
+  <div class="d-grid gap-2 d-md-block">
+    <a href="{% url 'blog:update' article.pk %}"><button type="button" class="btn btn-outline bordp podsvetkap" style="margin: 10px; width: 47%;">Редактировать</button></a>
+    <a href="{% url 'blog:delete' article.pk %}"><button type="button" class="btn btn-outline bordred podsvetkared" style="margin: 10px; width: 47%;">Удалить</button></a>
+  </div>
+</div>
+  </div>
+{% endblock %}
