@@ -9,8 +9,13 @@ class ProductTemplateView(TemplateView):
     """Главная страница"""
 
     template_name = "home.html"
-    products = Product.objects.filter(id__lt=4)
-    extra_context = {"products": products}
+
+    def get_context_data(self, **kwargs):
+        """ Передача объекта Product в шаблон """
+
+        context = super().get_context_data()
+        context["products"] = Product.objects.filter(id__lt=4)
+        return context
 
 
 class ProductListView(ListView):
@@ -34,8 +39,13 @@ class ContactTemplateView(TemplateView):
     """Контакты"""
 
     template_name = "contacts.html"
-    contact = Contact.objects.get(id=2)
-    extra_context = {"contact": contact}
+
+    def get_context_data(self, **kwargs):
+        """ Передача объекта Contact в шаблон """
+
+        context = super().get_context_data()
+        context["contact"] = Contact.objects.get(id=2)
+        return context
 
 
 class ProductCreateView(CreateView):
