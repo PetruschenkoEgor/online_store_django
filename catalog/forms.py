@@ -7,4 +7,17 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ("name", "description", "image", "category", "price")
+        fields = '__all__'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        name = cleaned_data.get('name')
+        description = cleaned_data.get('description')
+
+        words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
+
+        for word in words:
+            if word in name.lower():
+                self.add_error('name', f'Название не может содержать слово {word}!')
+            elif word in description.lower():
+                self.add_error('description', f'Описание не может содержать слово {word}!')
