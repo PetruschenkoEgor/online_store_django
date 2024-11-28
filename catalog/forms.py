@@ -9,6 +9,11 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = '__all__'
 
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price < 0:
+            self.add_error('price', 'Цена не может быть отрицательной!')
+
     def clean(self):
         cleaned_data = super().clean()
         name = cleaned_data.get('name')
