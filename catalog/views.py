@@ -12,7 +12,7 @@ class ProductTemplateView(TemplateView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
-        """ Передача объекта Product в шаблон """
+        """Передача объекта Product в шаблон"""
 
         context = super().get_context_data()
         context["products"] = Product.objects.filter(id__lt=4)
@@ -42,7 +42,7 @@ class ContactTemplateView(TemplateView):
     template_name = "contacts.html"
 
     def get_context_data(self, **kwargs):
-        """ Передача объекта Contact в шаблон """
+        """Передача объекта Contact в шаблон"""
 
         context = super().get_context_data()
         context["contact"] = Contact.objects.get(id=2)
