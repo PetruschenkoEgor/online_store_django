@@ -6,35 +6,7 @@
         <form method="post" enctype="multipart/form-data" action="" style="width: 100%">
             {% csrf_token %}
             <legend class="center mt-1">Заполните карточку товара</legend>
-            {% if object %}
-                {{ form.as_p }}
-            {% else %}
-            <div class="input-group mt-1">
-              <span class="input-group-text textp" style="width: 26%">Наименование</span>
-              <input type="text" aria-label="Product name" id="name" name="name" class="form-control border-2">
-            </div>
-            <div class="input-group mt-2">
-              <span class="input-group-text textp" style="width: 26%">Описание</span>
-              <input type="text" aria-label="Description" id="description" name="description" class="form-control border-2">
-            </div>
-            <div class="input-group mb-2 mt-2">
-                <label class="input-group-text textp" for="inputGroupFile02" style="width: 26%">Изображение</label>
-              <input type="file" class="form-control border-2" id="inputGroupFile02" name="image">
-            </div>
-            <div class="input-group mb-2">
-              <label class="input-group-text textp" for="inputGroupSelect01" style="width: 26%">Категория</label>
-              <select class="form-select border-2" id="inputGroupSelect01" name="category">
-                <option selected>Выберите категорию...</option>
-                <option value="1">Разработка</option>
-                <option value="2">Рассылки</option>
-              </select>
-            </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text textp" style="width: 20%">Цена</span>
-              <span class="input-group-text textp" style="width: 6%">₽</span>
-              <input type="text" class="form-control border-2" aria-label="Price" id="price" name="price">
-            </div>
-            {% endif %}
+            {{ form.as_p }}
             {% if object %}
                 <button type="submit" class="btn btn bordp podsvetkap textp btn-lg">Сохранить</button>
             {% else %}

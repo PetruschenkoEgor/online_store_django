@@ -2,6 +2,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+from catalog.forms import ProductForm
 from catalog.models import Contact, Product
 
 
@@ -11,7 +12,7 @@ class ProductTemplateView(TemplateView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
-        """ Передача объекта Product в шаблон """
+        """Передача объекта Product в шаблон"""
 
         context = super().get_context_data()
         context["products"] = Product.objects.filter(id__lt=4)
@@ -41,7 +42,7 @@ class ContactTemplateView(TemplateView):
     template_name = "contacts.html"
 
     def get_context_data(self, **kwargs):
-        """ Передача объекта Contact в шаблон """
+        """Передача объекта Contact в шаблон"""
 
         context = super().get_context_data()
         context["contact"] = Contact.objects.get(id=2)
@@ -52,7 +53,7 @@ class ProductCreateView(CreateView):
     """Добавление продукта"""
 
     model = Product
-    fields = ("name", "description", "image", "category", "price")
+    form_class = ProductForm
     template_name = "add_product.html"
     success_url = reverse_lazy("catalog:catalog")
 
@@ -61,7 +62,7 @@ class ProductUpdateView(UpdateView):
     """Редактирование продукта"""
 
     model = Product
-    fields = ("name", "description", "image", "category", "price")
+    form_class = ProductForm
     template_name = "add_product.html"
     success_url = reverse_lazy("catalog:catalog")
 
