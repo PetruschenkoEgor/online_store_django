@@ -68,6 +68,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("catalog:catalog")
 
     def get_success_url(self):
+        """Перенаправление"""
         return reverse("catalog:product", args=[self.kwargs.get("pk")])
 
 

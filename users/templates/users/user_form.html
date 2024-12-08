@@ -5,9 +5,15 @@
         <form method="post" enctype="multipart/form-data" action="" style="width: 100%">
                         {% csrf_token %}
                         {{ form.as_p }}
+            {% if object %}
+            <button type="submit" class="btn btn-primary">
+                        Редактировать
+                    </button>
+            {% else %}
                     <button type="submit" class="btn btn-primary">
                         Зарегистрироваться
                     </button>
+            {% endif %}
     </form>
 </div>
 </div>
