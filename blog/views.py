@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     ListView,
@@ -27,7 +28,7 @@ class ArticleListView(ListView):
         return queryset
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(LoginRequiredMixin, DetailView):
     """Детали статьи"""
 
     model = Article
@@ -51,7 +52,7 @@ class ArticleDetailView(DetailView):
         return self.object
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     """Добавление поста"""
 
     model = Article
@@ -60,7 +61,7 @@ class ArticleCreateView(CreateView):
     success_url = reverse_lazy("blog:blog")
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     """Редактирование статьи"""
 
     model = Article
@@ -73,7 +74,7 @@ class ArticleUpdateView(UpdateView):
         return reverse("blog:article", args=[self.kwargs.get("pk")])
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     """Удаление статьи"""
 
     model = Article

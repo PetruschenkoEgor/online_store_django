@@ -157,3 +157,6 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'catalog:home'
 # перенаправление после выхода
 LOGOUT_REDIRECT_URL = 'users:login'
+
+# перенаправление на страницу авторизации при ограничении доступа только для авторизованных пользователей
+LOGIN_URL = 'users:login'
