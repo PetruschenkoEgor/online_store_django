@@ -1,7 +1,6 @@
 import os
 
-from django import forms
-from django.forms import BooleanField
+from django.forms import BooleanField, ModelForm
 
 from .models import Product
 
@@ -19,17 +18,28 @@ WORDS = [
 ]
 
 
-class ProductForm(forms.ModelForm):
-    """Форма с полями name, description, image, category, price, которая будет отображаться в шаблонах"""
-
+class StyleFormMixin:
+    """ Стилизация формы """
     def __init__(self, *args, **kwargs):
-        """Стилизация формы"""
         super().__init__(*args, **kwargs)
         for fild_name, fild in self.fields.items():
             if isinstance(fild, BooleanField):
-                fild.widget.attrs["class"] = "form-check-input"
+                fild.widget.attrs['class'] = 'form-check-input'
             else:
-                fild.widget.attrs["class"] = "form-control"
+                fild.widget.attrs['class'] = 'form-control'
+
+
+class ProductForm(StyleFormMixin, ModelForm):
+    """Форма с полями name, description, image, category, price, которая будет отображаться в шаблонах"""
+
+    # def __init__(self, *args, **kwargs):
+    #     """Стилизация формы"""
+    #     super().__init__(*args, **kwargs)
+    #     for fild_name, fild in self.fields.items():
+    #         if isinstance(fild, BooleanField):
+    #             fild.widget.attrs["class"] = "form-check-input"
+    #         else:
+    #             fild.widget.attrs["class"] = "form-control"
 
     class Meta:
         """Модель и поля формы"""

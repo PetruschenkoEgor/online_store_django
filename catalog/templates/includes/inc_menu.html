@@ -11,6 +11,16 @@
                 <a href="{% url 'blog:blog' %}"><button class="button bgcg podsvetkav fs-1">Блог</button></a>
             <a href="{% url 'catalog:contacts' %}"><button class="button bgcg podsvetkav fs-1 radius-right">Контакты</button></a>
             <a href="{% url 'catalog:add' %}"><button class="button bgcg fs-1 radius-left radius-right podsvetkaviolet" style="margin-left: 1vw;">+</button></a>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'users:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button bgcg fs-1 radius-left radius-right" style="margin-left: 1vw;">Выйти</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'users:login' %}"><button class="button bgcg fs-1 radius-left radius-right" style="margin-left: 1vw;">Войти</button></a>
+                    <a href=""><button class="button bgcg fs-1 radius-left radius-right" style="margin-left: 1vw;">Регистрация</button></a>
+                {% endif %}
+
         </span>
         </div>
     </div>

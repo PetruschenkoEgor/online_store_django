@@ -152,3 +152,8 @@ SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
 AUTH_USER_MODEL = 'users.User'
+
+# перенаправление после входа
+LOGIN_REDIRECT_URL = 'catalog:home'
+# перенаправление после выхода
+LOGOUT_REDIRECT_URL = 'users:login'
