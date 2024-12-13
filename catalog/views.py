@@ -19,11 +19,17 @@ class ProductTemplateView(TemplateView):
         context = super().get_context_data()
         context["products"] = Product.objects.filter(id__lt=4)
         # права пользователя
-        context['perms'] = {
-            'products': {
-                'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
-                'can_delete_product': self.request.user.has_perm('catalog.delete_product'),
-                'can_change_product': self.request.user.has_perm('catalog.change_product'),
+        context["perms"] = {
+            "products": {
+                "can_unpublish_product": self.request.user.has_perm(
+                    "catalog.can_unpublish_product"
+                ),
+                "can_delete_product": self.request.user.has_perm(
+                    "catalog.delete_product"
+                ),
+                "can_change_product": self.request.user.has_perm(
+                    "catalog.change_product"
+                ),
             }
         }
         return context
@@ -41,11 +47,17 @@ class ProductListView(ListView):
         """Передача объекта Product в шаблон"""
         context = super().get_context_data(**kwargs)
         # права пользователя
-        context['perms'] = {
-            'products': {
-                'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
-                'can_delete_product': self.request.user.has_perm('catalog.delete_product'),
-                'can_change_product': self.request.user.has_perm('catalog.change_product'),
+        context["perms"] = {
+            "products": {
+                "can_unpublish_product": self.request.user.has_perm(
+                    "catalog.can_unpublish_product"
+                ),
+                "can_delete_product": self.request.user.has_perm(
+                    "catalog.delete_product"
+                ),
+                "can_change_product": self.request.user.has_perm(
+                    "catalog.change_product"
+                ),
             }
         }
         return context
@@ -62,11 +74,17 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         """Передача объекта Product в шаблон"""
         context = super().get_context_data(**kwargs)
         # права пользователя
-        context['perms'] = {
-            'products': {
-                'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
-                'can_delete_product': self.request.user.has_perm('catalog.delete_product'),
-                'can_change_product': self.request.user.has_perm('catalog.change_product'),
+        context["perms"] = {
+            "products": {
+                "can_unpublish_product": self.request.user.has_perm(
+                    "catalog.can_unpublish_product"
+                ),
+                "can_delete_product": self.request.user.has_perm(
+                    "catalog.delete_product"
+                ),
+                "can_change_product": self.request.user.has_perm(
+                    "catalog.change_product"
+                ),
             }
         }
         return context
@@ -94,7 +112,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("catalog:catalog")
 
     def form_valid(self, form):
-        """ При создании продукта, ему сразу же присваивается текущий пользователь как собственник """
+        """При создании продукта, ему сразу же присваивается текущий пользователь как собственник"""
         product = form.save()
         user = self.request.user
         product.owner = user
@@ -115,10 +133,10 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("catalog:product", args=[self.kwargs.get("pk")])
 
     def get_form_class(self):
-        """ Редактировать могут Модераторы продуктов или собственники """
+        """Редактировать могут Модераторы продуктов или собственники"""
         user = self.request.user
         # если у пользователя есть определенные права на редактирование признака публикации
-        if user.has_perm('catalog.can_unpublish_product'):
+        if user.has_perm("catalog.can_unpublish_product"):
             return ProductModeratorForm
         # или пользователь владелец продукта
         elif user == self.object.owner:
@@ -134,11 +152,11 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("catalog:catalog")
 
     def dispatch(self, request, *args, **kwargs):
-        """ Удалять могут Модераторы продуктов или собственники """
+        """Удалять могут Модераторы продуктов или собственники"""
         user = self.request.user
         product = self.get_object()
         # если у пользователя есть определенные права на удаление продукта
         # или пользователь владелец продукта
-        if user.has_perm('catalog.delete_product') or user == product.owner:
+        if user.has_perm("catalog.delete_product") or user == product.owner:
             return super().dispatch(request, *args, **kwargs)
         raise PermissionDenied

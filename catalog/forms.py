@@ -90,7 +90,8 @@ class ProductForm(StyleFormMixin, ModelForm):
 
 
 class ProductModeratorForm(StyleFormMixin, ModelForm):
-    """ Форма для продуктовых модераторов(редактировать признак публикации) """
+    """Форма для продуктовых модераторов(редактировать признак публикации)"""
+
     class Meta:
         model = Product
-        fields = ('sign_of_publication',)
+        fields = ("sign_of_publication",)
