@@ -18,6 +18,7 @@ class ProductTemplateView(TemplateView):
 
         context = super().get_context_data()
         context["products"] = Product.objects.filter(id__lt=4)
+        # права пользователя
         context['perms'] = {
             'products': {
                 'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
@@ -37,7 +38,9 @@ class ProductListView(ListView):
     context_object_name = "products"
 
     def get_context_data(self, **kwargs):
+        """Передача объекта Product в шаблон"""
         context = super().get_context_data(**kwargs)
+        # права пользователя
         context['perms'] = {
             'products': {
                 'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
@@ -56,7 +59,9 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "product"
 
     def get_context_data(self, **kwargs):
+        """Передача объекта Product в шаблон"""
         context = super().get_context_data(**kwargs)
+        # права пользователя
         context['perms'] = {
             'products': {
                 'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
@@ -87,6 +92,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm
     template_name = "add_product.html"
     success_url = reverse_lazy("catalog:catalog")
+
+    def form_valid(self, form):
+        """ При создании продукта, ему сразу же присваивается текущий пользователь как собственник """
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):

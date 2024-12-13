@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Product(models.Model):
@@ -26,6 +27,15 @@ class Product(models.Model):
         on_delete=models.SET_NULL,
         verbose_name="Категория",
         help_text="Введите категорию",
+        blank=True,
+        null=True,
+        related_name="products",
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        verbose_name="Владелец",
+        help_text="Укажите владельца",
         blank=True,
         null=True,
         related_name="products",
