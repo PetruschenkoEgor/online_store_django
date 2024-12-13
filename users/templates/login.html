@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<div class="col-12">
+    <div class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2 w-7 border border-3 border-dark-subtle" style="margin-top: 20px; margin-left: 25%; width: 50%; margin-bottom: 7%;">
+        <form method="post" enctype="multipart/form-data" action="{% url 'users:login' %}" style="width: 100%">
+            {% csrf_token %}
+            <legend class="center mt-1">Вход</legend>
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Email</label>
+                <input type="email" class="form-control" id="id_username" name="username" aria-describedby="emailHelp">
+              </div>
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Пароль</label>
+                <input type="password" class="form-control" id="id_password" name="password">
+              </div>
+                <button type="submit" class="btn btn bordp podsvetkap textp btn-lg mt-2">Войти</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
