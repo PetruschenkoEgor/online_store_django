@@ -115,11 +115,14 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("catalog:product", args=[self.kwargs.get("pk")])
 
     def get_form_class(self):
-        """ Редактировать могут Модераторы продуктов """
+        """ Редактировать могут Модераторы продуктов или собственники """
         user = self.request.user
-        # если у пользователя есть определенные права
+        # если у пользователя есть определенные права на редактирование признака публикации
         if user.has_perm('catalog.can_unpublish_product'):
             return ProductModeratorForm
+        # или пользователь владелец продукта
+        elif user == self.object.owner:
+            return ProductForm
         raise PermissionDenied
 
 
@@ -131,8 +134,11 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("catalog:catalog")
 
     def dispatch(self, request, *args, **kwargs):
-        """ Удалять могут Модераторы продуктов """
+        """ Удалять могут Модераторы продуктов или собственники """
         user = self.request.user
-        if user.has_perm('catalog.can_delete_product'):
+        product = self.get_object()
+        # если у пользователя есть определенные права на удаление продукта
+        # или пользователь владелец продукта
+        if user.has_perm('catalog.delete_product') or user == product.owner:
             return super().dispatch(request, *args, **kwargs)
         raise PermissionDenied
