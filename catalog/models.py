@@ -31,6 +31,7 @@ class Product(models.Model):
         related_name="products",
     )
     price = models.IntegerField(verbose_name="Цена", help_text="Введите цену продукта")
+    sign_of_publication = models.BooleanField(default=False, verbose_name="Признак публикации")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name="Дата последнего изменения"
@@ -40,6 +41,9 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name", "price"]
+        permissions = [
+            ('can_unpublish_product', 'Can unpublish product'),
+        ]
 
     def __str__(self):
         return f"{self.name} - {self.price}"

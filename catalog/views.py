@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Contact, Product
 
 
@@ -17,6 +18,13 @@ class ProductTemplateView(TemplateView):
 
         context = super().get_context_data()
         context["products"] = Product.objects.filter(id__lt=4)
+        context['perms'] = {
+            'products': {
+                'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
+                'can_delete_product': self.request.user.has_perm('catalog.delete_product'),
+                'can_change_product': self.request.user.has_perm('catalog.change_product'),
+            }
+        }
         return context
 
 
@@ -28,6 +36,17 @@ class ProductListView(ListView):
     template_name = "catalog.html"
     context_object_name = "products"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['perms'] = {
+            'products': {
+                'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
+                'can_delete_product': self.request.user.has_perm('catalog.delete_product'),
+                'can_change_product': self.request.user.has_perm('catalog.change_product'),
+            }
+        }
+        return context
+
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
     """Информация о продукте"""
@@ -35,6 +54,17 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "product.html"
     context_object_name = "product"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['perms'] = {
+            'products': {
+                'can_unpublish_product': self.request.user.has_perm('catalog.can_unpublish_product'),
+                'can_delete_product': self.request.user.has_perm('catalog.delete_product'),
+                'can_change_product': self.request.user.has_perm('catalog.change_product'),
+            }
+        }
+        return context
 
 
 class ContactTemplateView(TemplateView):
@@ -71,6 +101,14 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         """Перенаправление"""
         return reverse("catalog:product", args=[self.kwargs.get("pk")])
 
+    def get_form_class(self):
+        """ Редактировать могут Модераторы продуктов """
+        user = self.request.user
+        # если у пользователя есть определенные права
+        if user.has_perm('catalog.can_unpublish_product'):
+            return ProductModeratorForm
+        raise PermissionDenied
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """Удаление продукта"""
@@ -78,3 +116,10 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "product_confirm_delete.html"
     success_url = reverse_lazy("catalog:catalog")
+
+    def dispatch(self, request, *args, **kwargs):
+        """ Удалять могут Модераторы продуктов """
+        user = self.request.user
+        if user.has_perm('catalog.can_delete_product'):
+            return super().dispatch(request, *args, **kwargs)
+        raise PermissionDenied
