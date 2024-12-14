@@ -10,6 +10,7 @@ from django.views.generic import (
 )
 from django.core.mail import send_mail
 
+from blog.forms import ArticleForm
 from blog.models import Article
 
 
@@ -56,7 +57,8 @@ class ArticleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     """Добавление поста"""
 
     model = Article
-    fields = ("title", "content", "image", "sign_of_publication")
+    form_class = ArticleForm
+    # fields = ("title", "content", "image", "sign_of_publication")
     template_name = "article_form.html"
     success_url = reverse_lazy("blog:blog")
     # обязательное право для добавления поста
@@ -67,7 +69,8 @@ class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     """Редактирование статьи"""
 
     model = Article
-    fields = ("title", "content", "image", "sign_of_publication")
+    form_class = ArticleForm
+    # fields = ("title", "content", "image", "sign_of_publication")
     template_name = "article_form.html"
     success_url = reverse_lazy("blog:blog")
     # обязательное право для редактирования поста
