@@ -28,6 +28,17 @@ class ArticleListView(ListView):
         queryset = queryset.filter(sign_of_publication=True)
         return queryset
 
+    def get_context_data(self, **kwargs):
+        """Передача в шаблон"""
+        context = super().get_context_data(**kwargs)
+        context["perms"] = {
+            "articles": {
+                "change_article": self.request.user.has_perm("blog.change_article"),
+                "delete_article": self.request.user.has_perm("blog.delete_article"),
+            }
+        }
+        return context
+
 
 class ArticleDetailView(LoginRequiredMixin, DetailView):
     """Детали статьи"""
@@ -52,6 +63,17 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
             )
         return self.object
 
+    def get_context_data(self, **kwargs):
+        """Передача в шаблон"""
+        context = super().get_context_data(**kwargs)
+        context["perms"] = {
+            "articles": {
+                "change_article": self.request.user.has_perm("blog.change_article"),
+                "delete_article": self.request.user.has_perm("blog.delete_article"),
+            }
+        }
+        return context
+
 
 class ArticleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """Добавление поста"""
@@ -62,7 +84,7 @@ class ArticleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     template_name = "article_form.html"
     success_url = reverse_lazy("blog:blog")
     # обязательное право для добавления поста
-    permission_required = 'blog.add_article'
+    permission_required = "blog.add_article"
 
 
 class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -74,7 +96,7 @@ class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     template_name = "article_form.html"
     success_url = reverse_lazy("blog:blog")
     # обязательное право для редактирования поста
-    permission_required = 'blog.change_article'
+    permission_required = "blog.change_article"
 
     def get_success_url(self):
         """Перенаправление на статью"""
@@ -88,4 +110,4 @@ class ArticleDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
     template_name = "article_confirm_delete.html"
     success_url = reverse_lazy("blog:blog")
     # обязательное право для удаления поста
-    permission_required = 'blog.delete_article'
+    permission_required = "blog.delete_article"

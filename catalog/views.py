@@ -24,12 +24,8 @@ class ProductTemplateView(TemplateView):
                 "can_unpublish_product": self.request.user.has_perm(
                     "catalog.can_unpublish_product"
                 ),
-                "can_delete_product": self.request.user.has_perm(
-                    "catalog.delete_product"
-                ),
-                "can_change_product": self.request.user.has_perm(
-                    "catalog.change_product"
-                ),
+                "delete_product": self.request.user.has_perm("catalog.delete_product"),
+                "change_product": self.request.user.has_perm("catalog.change_product"),
             }
         }
         return context
@@ -52,12 +48,8 @@ class ProductListView(ListView):
                 "can_unpublish_product": self.request.user.has_perm(
                     "catalog.can_unpublish_product"
                 ),
-                "can_delete_product": self.request.user.has_perm(
-                    "catalog.delete_product"
-                ),
-                "can_change_product": self.request.user.has_perm(
-                    "catalog.change_product"
-                ),
+                "delete_product": self.request.user.has_perm("catalog.delete_product"),
+                "change_product": self.request.user.has_perm("catalog.change_product"),
             }
         }
         return context
@@ -79,12 +71,8 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
                 "can_unpublish_product": self.request.user.has_perm(
                     "catalog.can_unpublish_product"
                 ),
-                "can_delete_product": self.request.user.has_perm(
-                    "catalog.delete_product"
-                ),
-                "can_change_product": self.request.user.has_perm(
-                    "catalog.change_product"
-                ),
+                "delete_product": self.request.user.has_perm("catalog.delete_product"),
+                "change_product": self.request.user.has_perm("catalog.change_product"),
             }
         }
         return context
