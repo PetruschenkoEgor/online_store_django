@@ -35,6 +35,7 @@ class ArticleListView(ListView):
             "articles": {
                 "change_article": self.request.user.has_perm("blog.change_article"),
                 "delete_article": self.request.user.has_perm("blog.delete_article"),
+                "add_article": self.request.user.has_perm("blog.add_article"),
             }
         }
         return context
