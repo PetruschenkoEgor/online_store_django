@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     ListView,
@@ -10,6 +10,7 @@ from django.views.generic import (
 )
 from django.core.mail import send_mail
 
+from blog.forms import ArticleForm
 from blog.models import Article
 
 
@@ -26,6 +27,18 @@ class ArticleListView(ListView):
         queryset = super().get_queryset()
         queryset = queryset.filter(sign_of_publication=True)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        """Передача в шаблон"""
+        context = super().get_context_data(**kwargs)
+        context["perms"] = {
+            "articles": {
+                "change_article": self.request.user.has_perm("blog.change_article"),
+                "delete_article": self.request.user.has_perm("blog.delete_article"),
+                "add_article": self.request.user.has_perm("blog.add_article"),
+            }
+        }
+        return context
 
 
 class ArticleDetailView(LoginRequiredMixin, DetailView):
@@ -51,32 +64,51 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
             )
         return self.object
 
+    def get_context_data(self, **kwargs):
+        """Передача в шаблон"""
+        context = super().get_context_data(**kwargs)
+        context["perms"] = {
+            "articles": {
+                "change_article": self.request.user.has_perm("blog.change_article"),
+                "delete_article": self.request.user.has_perm("blog.delete_article"),
+            }
+        }
+        return context
 
-class ArticleCreateView(LoginRequiredMixin, CreateView):
+
+class ArticleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """Добавление поста"""
 
     model = Article
-    fields = ("title", "content", "image", "sign_of_publication")
+    form_class = ArticleForm
+    # fields = ("title", "content", "image", "sign_of_publication")
     template_name = "article_form.html"
     success_url = reverse_lazy("blog:blog")
+    # обязательное право для добавления поста
+    permission_required = "blog.add_article"
 
 
-class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Редактирование статьи"""
 
     model = Article
-    fields = ("title", "content", "image", "sign_of_publication")
+    form_class = ArticleForm
+    # fields = ("title", "content", "image", "sign_of_publication")
     template_name = "article_form.html"
     success_url = reverse_lazy("blog:blog")
+    # обязательное право для редактирования поста
+    permission_required = "blog.change_article"
 
     def get_success_url(self):
         """Перенаправление на статью"""
         return reverse("blog:article", args=[self.kwargs.get("pk")])
 
 
-class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Удаление статьи"""
 
     model = Article
     template_name = "article_confirm_delete.html"
     success_url = reverse_lazy("blog:blog")
+    # обязательное право для удаления поста
+    permission_required = "blog.delete_article"

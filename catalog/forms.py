@@ -87,3 +87,11 @@ class ProductForm(StyleFormMixin, ModelForm):
                 self.add_error(
                     "description", f"Описание не может содержать слово {word}!"
                 )
+
+
+class ProductModeratorForm(StyleFormMixin, ModelForm):
+    """Форма для продуктовых модераторов(редактировать признак публикации)"""
+
+    class Meta:
+        model = Product
+        fields = ("sign_of_publication",)

@@ -18,8 +18,12 @@
                     <p class="card-text center mt-3">{{ product.description|truncatechars:100 }}</p>
                 </div>
                 <div class="d-grid gap-2 d-md-block">
+                    {% if perms.products.can_unpublish_product or perms.products.change_product or user == product.owner %}
                   <a href="{% url 'catalog:update' product.pk %}"><button type="button" class="btn btn-outline bordp podsvetkap" style="margin: 10px; width: 44%;">Редактировать</button></a>
+                    {% endif %}
+                    {% if perms.products.delete_product or user == product.owner %}
                     <a href="{% url 'catalog:delete' product.pk %}"><button type="button" class="btn btn-outline bordred podsvetkared" style="margin: 10px; width: 44%;">Удалить</button></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
