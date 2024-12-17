@@ -1,0 +1,17 @@
+<div class="container">
+    <select class="form-select" aria-label="Default select example" id="categorySelect">
+      <option selected>Выберите категорию продукта</option>
+        {% for category in categories %}
+      <option value="{% url 'catalog:category' category.id %}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+        </div>
+
+<script>
+    document.getElementById('categorySelect').addEventListener('change', function() {
+        var selectedValue = this.value;
+        if (selectedValue) {
+            window.location.href = selectedValue;
+        }
+    });
+</script>
