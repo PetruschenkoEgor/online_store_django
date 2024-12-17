@@ -7,7 +7,12 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Contact, Product, Category
-from catalog.services import get_product_list_in_category, get_category, get_categories
+from catalog.services import (
+    get_product_list_in_category,
+    get_category,
+    get_categories,
+    get_products_from_cache,
+)
 
 
 class ProductTemplateView(TemplateView):
@@ -44,7 +49,7 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         """Передача объекта Product в шаблон"""
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
+        context["categories"] = Category.objects.all()
         # права пользователя
         context["perms"] = {
             "products": {
@@ -57,25 +62,29 @@ class ProductListView(ListView):
         }
         return context
 
+    def get_queryset(self):
+        return get_products_from_cache()
+
 
 class ProductCategoryListView(ListView):
-    """ Список продуктов в определенной категории """
+    """Список продуктов в определенной категории"""
+
     model = Product
     template_name = "category.html"
     context_object_name = "products"
 
     def get_queryset(self):
-        """ Передаем продукты определенной категории в шаблон """
+        """Передаем продукты определенной категории в шаблон"""
         # получаем ид категории
-        category_id = self.kwargs.get('category_id')
+        category_id = self.kwargs.get("category_id")
         return get_product_list_in_category(category_id)
 
     def get_context_data(self, **kwargs):
-        """ Передаем категорию в шаблон """
+        """Передаем категорию в шаблон"""
         context = super().get_context_data(**kwargs)
-        category_id = self.kwargs.get('category_id')
-        context['category'] = get_category(category_id)
-        context['categories'] = get_categories()
+        category_id = self.kwargs.get("category_id")
+        context["category"] = get_category(category_id)
+        context["categories"] = get_categories()
         return context
 
 
