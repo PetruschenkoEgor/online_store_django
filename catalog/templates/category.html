@@ -4,6 +4,7 @@
 {% block content %}
 {% include 'includes/choice_category.html' %}
 <div class="col">
+    <h3 class="center mt-4">Категория продуктов: {{ category.name }}</h3>
       <div class="container" style="margin-top: 30px; margin-bottom: 100px;">
         {% for product in products %}
           <div class="pos">
