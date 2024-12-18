@@ -11,7 +11,7 @@ from catalog.services import (
     get_product_list_in_category,
     get_category,
     get_categories,
-    get_products_from_cache,
+    get_products_from_cache, get_categories_from_cache,
 )
 
 
@@ -49,7 +49,7 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         """Передача объекта Product в шаблон"""
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
+        context["categories"] = get_categories_from_cache()
         # права пользователя
         context["perms"] = {
             "products": {

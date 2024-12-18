@@ -40,3 +40,22 @@ def get_products_from_cache():
     products = Product.objects.all()
     cache.set(key, products, timeout=60 * 15)  # 15 минут
     return products
+
+
+def get_categories_from_cache():
+    """Получение категорий из кэша, если кэш пуст, данные берутся из БД"""
+    # если кэш не включен, мы возвращаем категории сразу из базы данных
+    if not CACHE_ENABLED:
+        return Category.objects.all()
+
+    # ключ для обращения к кэшу
+    key = "categories_list"
+    # обращение к django для получения кэша по ключу
+    categories = cache.get(key)
+    if categories is not None:
+        return categories
+
+    # если мы не получили категории из кэша, то нам надо сначала получить категории, а потом положить их в кэш
+    categories = Category.objects.all()
+    cache.set(key, categories, timeout=60 * 15)  # 15 минут
+    return categories
